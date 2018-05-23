@@ -41,26 +41,40 @@ function createLight() {
     scene.add(spotLight);
 }
 
-function createEarthMaterial() {
-    var earthTexture = new THREE.Texture();
+function createEyeMaterial() {
+    var EyeTexture = new THREE.Texture();
     var loader = new THREE.ImageLoader();
-    loader.load('assets/James_Eye_Green.jpg', function(image){
-        earthTexture.image = image;
-        earthTexture.needsUpdate = true;
+    loader.load('assets/eye.jpg', function(image){
+        EyeTexture.image = image;
+        EyeTexture.needsUpdate = true;
     });
+    // var uniforms = {
+    //   "texture": { type: "t", value: texture }
+    // };
 
-    var earthMaterial = new THREE.MeshBasicMaterial();
-    earthMaterial.map = earthTexture;
+  //   var material = new THREE.ShaderMaterial( {
+  //   uniforms    : uniforms,
+  //   vertexShader  : document.getElementById( 'vertex_shader' ).textContent,
+  //   fragmentShader  : document.getElementById( 'fragment_shader' ).textContent
+  // } );
 
-    return earthMaterial;
+  //   material.map = EyeTexture;
+
+  //   return material;
+    var EyeMaterial = new THREE.MeshBasicMaterial();
+    EyeMaterial.map = EyeTexture;
+
+    return EyeMaterial;
 }
 
-function createEarth() {
+
+function createEye() {
     var sphereGeometry = new THREE.SphereGeometry(15, 30, 30);
-    var sphereMaterial = createEarthMaterial();
-    var earthMesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
-    earthMesh.name = 'earth';
-    scene.add(earthMesh);
+    // var sphereGeometry = new THREE.SphereGeometry( 15,30,30, Math.PI/2, Math.PI*2, 0, Math.PI);
+    var sphereMaterial = createEyeMaterial();
+    var EyeMesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
+    EyeMesh.name = 'Eye';
+    scene.add(EyeMesh);
 }
 
 //init() gets executed once
@@ -72,7 +86,7 @@ function init() {
     createCamera();
     createLight();
 
-    createEarth();
+    createEye();
 
 
     document.body.appendChild(renderer.domElement);
@@ -86,7 +100,7 @@ function init() {
 function render() {
 
     cameraControl.update();
-    scene.getObjectByName('earth').rotation.y += 0.001;
+    scene.getObjectByName('Eye').rotation.y += 0.001;
 
     renderer.render(scene, camera);
     requestAnimationFrame(render);
